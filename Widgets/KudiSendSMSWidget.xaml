@@ -1,12 +1,13 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="KudiSendSMSWidget" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="KudiSendSMSWidget" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_SelimotDataTable" Type="InOutArgument(sd:DataTable)" />
+    <x:Property Name="out_IsProcessDataSuccessful" Type="OutArgument(x:Boolean)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>1240,2665</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>992,2935</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="28">
+    <scg:List x:TypeArguments="x:String" Capacity="56">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System</x:String>
@@ -35,6 +36,8 @@
       <x:String>System.Reflection</x:String>
       <x:String>UiPath.UIAutomationNext.Enums</x:String>
       <x:String>UiPath.DataTableUtilities</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -98,45 +101,49 @@
       <AssemblyReference>System.Data.Common</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap:VirtualizedContainerService.HintSize="854,2600" sap2010:WorkflowViewState.IdRef="Sequence_6">
+  <Sequence sap:VirtualizedContainerService.HintSize="854,2870" sap2010:WorkflowViewState.IdRef="Sequence_6">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Sequence sap:VirtualizedContainerService.HintSize="812,2512" sap2010:WorkflowViewState.IdRef="Sequence_5">
+    <Sequence sap:VirtualizedContainerService.HintSize="812,2782" sap2010:WorkflowViewState.IdRef="Sequence_5">
       <Sequence.Variables>
         <Variable x:TypeArguments="x:String" Name="Telephone" />
         <Variable x:TypeArguments="x:String" Name="Sender" />
         <Variable x:TypeArguments="x:String" Name="Message" />
         <Variable x:TypeArguments="sd:DataTable" Name="SelimotDataTableFiltered" />
-        <Variable x:TypeArguments="x:Int32" Default="0" Name="InterationCount" />
+        <Variable x:TypeArguments="x:Int32" Name="InterationCount">
+          <Variable.Default>
+            <Literal x:TypeArguments="x:Int32" />
+          </Variable.Default>
+        </Variable>
       </Sequence.Variables>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DisplayName="For Each Row in SelimotDataTable" sap:VirtualizedContainerService.HintSize="750,2401" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+      <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DisplayName="For Each Row in SelimotDataTable" sap:VirtualizedContainerService.HintSize="750,2671" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
         <ui:ForEachRow.Body>
           <ActivityAction x:TypeArguments="sd:DataRow">
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="716,2284" sap2010:WorkflowViewState.IdRef="Sequence_7">
+            <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="716,2554" sap2010:WorkflowViewState.IdRef="Sequence_7">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <If DisplayName=" If &quot;Status&quot; IS NULL &amp;&amp; &quot;InterationCount&quot; is Zero" sap:VirtualizedContainerService.HintSize="674,2196" sap2010:WorkflowViewState.IdRef="If_1">
+              <If DisplayName=" If &quot;Status&quot; IS NULL &amp;&amp; &quot;InterationCount&quot; is Zero" sap:VirtualizedContainerService.HintSize="674,2466" sap2010:WorkflowViewState.IdRef="If_1">
                 <If.Condition>
                   <InArgument x:TypeArguments="x:Boolean">
                     <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_28">CurrentRow["STATUS"] == ""</CSharpValue>
                   </InArgument>
                 </If.Condition>
                 <If.Then>
-                  <Sequence sap:VirtualizedContainerService.HintSize="596,1920" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                  <Sequence sap:VirtualizedContainerService.HintSize="596,2190" sap2010:WorkflowViewState.IdRef="Sequence_8">
                     <Sequence.Variables>
                       <Variable x:TypeArguments="x:String" Name="ConfirmationText" />
                     </Sequence.Variables>
@@ -220,7 +227,7 @@
                         </ui:CursorPosition>
                       </ui:Click.CursorPosition>
                       <ui:Click.Target>
-                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="5ac11d7b-6f1f-45e3-adc5-ed57ef6fe69b" InformativeScreenshot="e68bd483e97a7a20206218f9a1d81397" Selector="&lt;wnd app='firefox.exe' cls='MozillaWindowClass' title='Send Bulksms — Mozilla Firefox' /&gt;&lt;ctrl name='OK' role='push button' /&gt;">
+                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="5ac11d7b-6f1f-45e3-adc5-ed57ef6fe69b" InformativeScreenshot="28ad557e7e0a79c2daa8cab43d496adf" Selector="&lt;wnd app='firefox.exe' cls='MozillaWindowClass' title='Send Bulksms — Mozilla Firefox' /&gt;&lt;ctrl name='OK' role='push button' /&gt;">
                           <ui:Target.TimeoutMS>
                             <InArgument x:TypeArguments="x:Int32" />
                           </ui:Target.TimeoutMS>
@@ -233,7 +240,7 @@
                     <Delay DisplayName="Delay For 4 Secs" Duration="00:00:04" sap:VirtualizedContainerService.HintSize="554,90" sap2010:WorkflowViewState.IdRef="Delay_1" />
                     <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Confirmation Text" sap:VirtualizedContainerService.HintSize="554,107" sap2010:WorkflowViewState.IdRef="GetValue_1">
                       <ui:GetValue.Target>
-                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="36ea2b0c-f008-4d7c-908f-d932001c1afa" InformativeScreenshot="a866e223886aa27c2ad8103f5e369518" Selector="&lt;wnd app='firefox.exe' cls='MozillaWindowClass' title='Send Bulksms — Mozilla Firefox' /&gt;&lt;ctrl name='Message submitted - recipients [ 1 ] @ ₦ 2.80' role='text' /&gt;&lt;ctrl name='Message submitted - recipients [ 1 ] @ ₦ 2.80' role='editable text' /&gt;">
+                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="36ea2b0c-f008-4d7c-908f-d932001c1afa" InformativeScreenshot="a866e223886aa27c2ad8103f5e369518" Selector="&lt;wnd app='firefox.exe' cls='MozillaWindowClass' title='Send Bulksms — Mozilla Firefox' /&gt;&lt;ctrl name='Message submitted - recipients [ 1 ] *' role='text' /&gt;&lt;ctrl name='Message submitted - recipients [ 1 ] *' role='editable text' /&gt;">
                           <ui:Target.TimeoutMS>
                             <InArgument x:TypeArguments="x:Int32" />
                           </ui:Target.TimeoutMS>
@@ -248,14 +255,14 @@
                         </OutArgument>
                       </ui:GetValue.Value>
                     </ui:GetValue>
-                    <If DisplayName="If ConfirmationText Is Found" sap:VirtualizedContainerService.HintSize="554,736" sap2010:WorkflowViewState.IdRef="If_2">
+                    <If DisplayName="If ConfirmationText Is Found" sap:VirtualizedContainerService.HintSize="554,1006" sap2010:WorkflowViewState.IdRef="If_2">
                       <If.Condition>
                         <InArgument x:TypeArguments="x:Boolean">
                           <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_29">ConfirmationText.ToLower().Contains("submitted")</CSharpValue>
                         </InArgument>
                       </If.Condition>
                       <If.Then>
-                        <Sequence sap:VirtualizedContainerService.HintSize="476,382" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                        <Sequence sap:VirtualizedContainerService.HintSize="476,660" sap2010:WorkflowViewState.IdRef="Sequence_10">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -295,21 +302,45 @@
                               </InArgument>
                             </Assign.Value>
                           </Assign>
+                          <ui:WriteRange StartingCell="{x:Null}" AddHeaders="True" DisplayName="Update Selimot DataTable WorkSheet" sap:VirtualizedContainerService.HintSize="434,116" sap2010:WorkflowViewState.IdRef="WriteRange_1" SheetName="SMS" WorkbookPath="C:\botfiles\selimot_data.xlsx">
+                            <ui:WriteRange.DataTable>
+                              <InArgument x:TypeArguments="sd:DataTable">
+                                <CSharpValue x:TypeArguments="sd:DataTable" sap2010:WorkflowViewState.IdRef="CSharpValue`1_32">in_SelimotDataTable</CSharpValue>
+                              </InArgument>
+                            </ui:WriteRange.DataTable>
+                          </ui:WriteRange>
+                          <Assign sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_2">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:Boolean">
+                                <CSharpReference x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpReference`1_4">out_IsProcessDataSuccessful</CSharpReference>
+                              </OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:Boolean">
+                                <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_33">true</CSharpValue>
+                              </InArgument>
+                            </Assign.Value>
+                          </Assign>
                           <ui:Break DisplayName="Break Out of the loop" sap:VirtualizedContainerService.HintSize="434,25" sap2010:WorkflowViewState.IdRef="Break_1" />
                         </Sequence>
                       </If.Then>
                       <If.Else>
-                        <Sequence sap:VirtualizedContainerService.HintSize="400,178" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                        <Sequence sap:VirtualizedContainerService.HintSize="476,170" sap2010:WorkflowViewState.IdRef="Sequence_11">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
-                          <Throw sap:VirtualizedContainerService.HintSize="358,90" sap2010:WorkflowViewState.IdRef="Throw_1">
-                            <InArgument x:TypeArguments="s:Exception">
-                              <CSharpValue x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="CSharpValue`1_31">new Exception(ConfirmationText ?? "Error Occured While Sending SMS")</CSharpValue>
-                            </InArgument>
-                          </Throw>
+                          <Assign sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_3">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:Boolean">
+                                <CSharpReference x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpReference`1_5">out_IsProcessDataSuccessful</CSharpReference>
+                              </OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                            </Assign.Value>
+                          </Assign>
                         </Sequence>
                       </If.Else>
                     </If>

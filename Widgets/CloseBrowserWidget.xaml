@@ -3,10 +3,12 @@
     <x:Property Name="in_AppBrowser" Type="InArgument(ui:Browser)" />
   </x:Members>
   <this:CloseBrowserWidget.in_AppBrowser>
-    <InArgument x:TypeArguments="ui:Browser" />
+    <InArgument x:TypeArguments="ui:Browser">
+      <CSharpValue x:TypeArguments="ui:Browser" sap2010:WorkflowViewState.IdRef="CSharpValue`1_12">null</CSharpValue>
+    </InArgument>
   </this:CloseBrowserWidget.in_AppBrowser>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>1240,328</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>904,806</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="42">
@@ -99,18 +101,57 @@
       <AssemblyReference>System.Data.SqlClient</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap:VirtualizedContainerService.HintSize="400,113" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap:VirtualizedContainerService.HintSize="520,741" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:CloseTab DisplayName="Close App Browsert" sap:VirtualizedContainerService.HintSize="358,25" sap2010:WorkflowViewState.IdRef="CloseTab_1">
-      <ui:CloseTab.Browser>
-        <InArgument x:TypeArguments="ui:Browser">
-          <CSharpValue x:TypeArguments="ui:Browser" sap2010:WorkflowViewState.IdRef="CSharpValue`1_1">in_AppBrowser</CSharpValue>
+    <ui:LogMessage DisplayName="Trace Logger" sap:VirtualizedContainerService.HintSize="478,92" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Trace">
+      <ui:LogMessage.Message>
+        <InArgument x:TypeArguments="x:Object">
+          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_9">"Inside CloseBrowserWidget"</CSharpValue>
         </InArgument>
-      </ui:CloseTab.Browser>
-    </ui:CloseTab>
+      </ui:LogMessage.Message>
+    </ui:LogMessage>
+    <If sap:VirtualizedContainerService.HintSize="478,389" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Condition>
+        <InArgument x:TypeArguments="x:Boolean">
+          <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_13">in_AppBrowser != null</CSharpValue>
+        </InArgument>
+      </If.Condition>
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="400,113" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:CloseTab DisplayName="Close App Browsert" sap:VirtualizedContainerService.HintSize="358,25" sap2010:WorkflowViewState.IdRef="CloseTab_2">
+            <ui:CloseTab.Browser>
+              <InArgument x:TypeArguments="ui:Browser">
+                <CSharpValue x:TypeArguments="ui:Browser" sap2010:WorkflowViewState.IdRef="CSharpValue`1_7">in_AppBrowser</CSharpValue>
+              </InArgument>
+            </ui:CloseTab.Browser>
+          </ui:CloseTab>
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence sap:VirtualizedContainerService.HintSize="400,80" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </Sequence>
+      </If.Else>
+    </If>
+    <ui:LogMessage DisplayName="Trace Logger" sap:VirtualizedContainerService.HintSize="478,92" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Trace">
+      <ui:LogMessage.Message>
+        <InArgument x:TypeArguments="x:Object">
+          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_10">"Exiting CloseBrowserWidget."</CSharpValue>
+        </InArgument>
+      </ui:LogMessage.Message>
+    </ui:LogMessage>
   </Sequence>
 </Activity>
